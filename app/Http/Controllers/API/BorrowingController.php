@@ -18,14 +18,7 @@ class BorrowingController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->middleware('permission:view borrowings')->only(['index', 'show', 'userBorrowings']);
-        $this->middleware('permission:create borrowings')->only(['store']);
-        $this->middleware('permission:edit borrowings')->only(['update', 'returnBook']);
-        $this->middleware('permission:delete borrowings')->only(['destroy']);
-    }
+    
 
     /**
      * Display a listing of the borrowings.

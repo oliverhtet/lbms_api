@@ -20,29 +20,35 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public routes
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::prefix('v1')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 
-// Protected routes
-Route::middleware('auth:sanctum')->group(function () {
-    // Auth
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [AuthController::class, 'user']);
-    
-    // Books
-    Route::apiResource('books', BookController::class);
-    
-    // Authors
-    Route::apiResource('authors', AuthorController::class);
-    
-    // Categories
-    Route::apiResource('categories', CategoryController::class);
-    
-    // Borrowings
-    Route::apiResource('borrowings', BorrowingController::class);
-    Route::post('/borrowings/{id}/return', [BorrowingController::class, 'returnBook']);
-    Route::get('/my-borrowings', [BorrowingController::class, 'userBorrowings']);
-    
-    // Users (admin only)
-    Route::apiResource('users', UserController::class)->middleware('role:admin');
+    // Protected routes
+    Route::middleware('auth:sanctum')->group(function () {
+        // Auth
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/user', [AuthController::class, 'user']);
+        
+        // Books
+        Route::get('/books', [BookController::class, 'index']);
+        Route::get('/books/{book}', [BookController::class, 'show']);
+        Route::post('/books', [BookController::class, 'store']);
+        Route::put('/books/{book}', [BookController::class, 'update']);
+        Route::delete('/books/{book}', [BookController::class, 'destroy']);
+        
+        // Authors
+        Route::apiResource('authors', AuthorController::class);
+        
+        // Categories
+        Route::apiResource('categories', CategoryController::class);
+        
+        // Borrowings
+        Route::apiResource('borrowings', BorrowingController::class);
+        Route::post('/borrowings/{id}/return', [BorrowingController::class, 'returnBook']);
+        Route::get('/my-borrowings', [BorrowingController::class, 'userBorrowings']);
+        
+        // Users (admin only)
+        Route::apiResource('users', UserController::class)->middleware('role:admin');
+    });
 });

@@ -13,26 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->middleware('permission:view books')->only(['index', 'show']);
-        $this->middleware('permission:create books')->only(['store']);
-        $this->middleware('permission:edit books')->only(['update']);
-        $this->middleware('permission:delete books')->only(['destroy']);
-    }
-
-    /**
-     * Display a listing of the books.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
         $query = Book::with(['authors', 'categories']);

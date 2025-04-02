@@ -15,11 +15,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->middleware('role:admin');
-    }
+   
 
     /**
      * Display a listing of the users.
